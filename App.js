@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TextInput, ScrollView, Button, TouchableOpacity, DrawerLayoutAndroid, Image, FlatList } from 'react-native';
-
+import { NativeRouter, Route, Link, BackButton } from "react-router-native";
 
 const DATA = [
   {
@@ -61,9 +61,44 @@ api()
 
 export default function App() {
 
-
+  const AnimeStr = () => (
+    <BackButton>
+      <Text>1</Text>
+    </BackButton>
+  )
+  const Home = () => (
+    <DrawerLayoutAndroid
+    drawerWidth={300}
+    drawerPosition = {'left'}
+    renderNavigationView={navigationView}
+    >
+      <SafeAreaView style = { styles.container }>
+        <View style = { styles.search }>
+          <TextInput style = { styles.input } />
+          <StatusBar style = "auto" />
+        </View>
+        <View style = { styles.scroll}>
+          <ScrollView>
+            <FlatList data={DATA}
+            renderItem={AnimeBlock} />
+          </ScrollView>
+        </View>
+        <View style = { styles.panel}>
+          <TouchableOpacity style={ styles.button }>
+            <Text>Уведомление</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={ styles.button }>
+            <Text>Мои</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={ styles.button }>
+            <Text>Настройка</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    </DrawerLayoutAndroid>
+  )
   const Anime = ({ title, opis, uri }) => (
-    <TouchableOpacity>
+    <Link to="/animeStr" underlayColor="#f0f4f7">
       <View style={styles.animeView}>
         <Image source={uri}style={styles.img} />
         <View style={{marginLeft : 10}}>
@@ -71,7 +106,7 @@ export default function App() {
           <Text style = { [styles.animeOpis, {marginTop : 10}] } numberOfLines={3}>{opis}</Text>
         </View>
       </View>
-    </TouchableOpacity>
+      </Link>
   )
 
   const AnimeBlock = ({ item }) => (
@@ -95,35 +130,10 @@ export default function App() {
     </View>
   );
     return (
-      <DrawerLayoutAndroid
-      drawerWidth={300}
-      drawerPosition = {'left'}
-      renderNavigationView={navigationView}
-      >
-        <SafeAreaView style = { styles.container }>
-          <View style = { styles.search }>
-            <TextInput style = { styles.input } />
-            <StatusBar style = "auto" />
-          </View>
-          <View style = { styles.scroll}>
-            <ScrollView>
-              <FlatList data={DATA}
-              renderItem={AnimeBlock} />
-            </ScrollView>
-          </View>
-          <View style = { styles.panel}>
-            <TouchableOpacity style={ styles.button }>
-              <Text>Уведомление</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={ styles.button }>
-              <Text>Мои</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={ styles.button }>
-              <Text>Настройка</Text>
-            </TouchableOpacity>
-          </View>
-        </SafeAreaView>
-      </DrawerLayoutAndroid>
+      <NativeRouter>
+        <Route exact path="/" component={Home} />
+        <Route path="/animeStr" component={AnimeStr} />
+      </NativeRouter>
     );
 }
 
