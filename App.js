@@ -34,9 +34,34 @@ const DATA = [
     title: 'Павлович',
     opis: '6',
   },
-];
+]
+
+function api () {
+  fetch("http://diwos.online/")
+  .then(res => res.json())
+  .then(
+    (result) => {
+      result.drinks.forEach(
+        (element) => {
+          DATA.push(
+            {
+              uri : {uri : element.strDrinkThumb},
+              title : element.strDrink,
+              opis : element.idDrink
+            }
+          )
+        }
+      )
+
+    }
+  )
+}
+api()
+
 
 export default function App() {
+
+
   const Anime = ({ title, opis, uri }) => (
     <TouchableOpacity>
       <View style={styles.animeView}>
