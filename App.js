@@ -3,6 +3,10 @@ import React from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TextInput, ScrollView, Button, TouchableOpacity, DrawerLayoutAndroid, Image, FlatList } from 'react-native';
 import { NativeRouter, Route, Link, BackButton } from "react-router-native";
 
+import AnimeStr from './src/animeStr'
+import Anime from './src/anime'
+import navigationView from './src/navigationView'
+
 const DATA = []
 
 function api () {
@@ -25,16 +29,13 @@ function api () {
     }
   )
 }
-api()
 
-
+const t = 123;
 export default function App() {
-
-  const AnimeStr = () => (
-    <BackButton>
-      <Text>1</Text>
-    </BackButton>
+  const AnimeBlock = ({ item }) => (
+    <Anime title={item.title} opis={item.opis} uri={item.uri}/>
   )
+
   const Home = () => (
     <DrawerLayoutAndroid
     drawerWidth={300}
@@ -59,49 +60,20 @@ export default function App() {
           <TouchableOpacity style={ styles.button }>
             <Text>Мои</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={ styles.button }>
+          <Link to={"/animeStr/" + t} underlayColor="#f0f4f7">
+          <View style={ styles.button }>
             <Text>Настройка</Text>
-          </TouchableOpacity>
+          </View>
+          </Link>
         </View>
       </SafeAreaView>
     </DrawerLayoutAndroid>
   )
-  const Anime = ({ title, opis, uri }) => (
-    <Link to="/animeStr" underlayColor="#f0f4f7">
-      <View style={styles.animeView}>
-        <Image source={uri}style={styles.img} />
-        <View style={{marginLeft : 10}}>
-          <Text style = { styles.nameAnime } numberOfLines={2}>{title}</Text>
-          <Text style = { [styles.animeOpis, {marginTop : 10}] } numberOfLines={3}>{opis}</Text>
-        </View>
-      </View>
-      </Link>
-  )
 
-  const AnimeBlock = ({ item }) => (
-    <Anime title={item.title} opis={item.opis} uri={item.uri}/>
-  )
-
-  const navigationView = () => (
-    <View style={styles.navig}>
-      <TouchableOpacity style={ styles.buttonNavig }>
-        <Text>Мои подписки</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={ styles.buttonNavig }>
-        <Text>Настройка</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={ styles.buttonNavig }>
-        <Text>Уведомление</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={ styles.buttonNavig }>
-        <Text>Справка</Text>
-      </TouchableOpacity>
-    </View>
-  );
     return (
       <NativeRouter>
         <Route exact path="/" component={Home} />
-        <Route path="/animeStr" component={AnimeStr} />
+        <Route path="/animeStr/:title" component={AnimeStr} />
       </NativeRouter>
     );
 }
@@ -139,34 +111,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10
   },
-  navig : {
-    flex : 1,
-    flexDirection: 'column',
-    paddingTop : 20,
-  },
-  buttonNavig : {
-    alignItems: "center",
-    padding: 20,
-  },
-  img : {
-    width : 100,
-    height : 150,
-    resizeMode : 'cover'
-  },
-  animeView : {
-    flex : 1,
-    flexDirection: 'row',
-    marginTop : 10
-  },
-  animeOpis : {
-    fontSize : 20,
-    minWidth : '70%',
-    maxWidth : '80%'
-  },
-  nameAnime : {
-    fontWeight: 'bold',
-    fontSize : 20,
-    minWidth : '70%',
-    maxWidth : '80%'
-  }
 });
