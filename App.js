@@ -1,13 +1,90 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TextInput, ScrollView, Button, TouchableOpacity, DrawerLayoutAndroid, Image, FlatList } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TextInput, ScrollView, Button, TouchableOpacity, DrawerLayoutAndroid, Image, FlatList, Dimensions } from 'react-native';
 import { NativeRouter, Route, Link, BackButton } from "react-router-native";
 
 import AnimeStr from './src/animeStr'
 import Anime from './src/anime'
 import navigationView from './src/navigationView'
 
-const DATA = []
+const DATA = [
+  {
+    uri : {uri : 'https://avatars.mds.yandex.net/get-zen_doc/3644947/pub_5f6b3f012ac02858cefae551_5f6b5dc842c2f942be29268d/scale_1200'},
+    title : 'Егор Мамонов Павлович',
+    opis : 'Супер крутое аниме 228 1337',
+    id : '0',
+    duber : [{
+      name : 'Дабер',
+    }]
+  },
+  {
+    uri : {uri : 'https://avatars.mds.yandex.net/get-zen_doc/3644947/pub_5f6b3f012ac02858cefae551_5f6b5dc842c2f942be29268d/scale_1200'},
+    title : 'Егор Мамонов Павлович',
+    opis : 'Супер крутое аниме 228 1337',
+    id : '1'
+  },
+  {
+    uri : {uri : 'https://avatars.mds.yandex.net/get-zen_doc/3644947/pub_5f6b3f012ac02858cefae551_5f6b5dc842c2f942be29268d/scale_1200'},
+    title : 'Егор Мамонов Павлович',
+    opis : 'Супер крутое аниме 228 1337',
+    id : '2'
+  },
+  {
+    uri : {uri : 'https://avatars.mds.yandex.net/get-zen_doc/3644947/pub_5f6b3f012ac02858cefae551_5f6b5dc842c2f942be29268d/scale_1200'},
+    title : 'Егор Мамонов Павлович',
+    opis : 'Супер крутое аниме 228 1337',
+    id : '3'
+  },
+  {
+    uri : {uri : 'https://avatars.mds.yandex.net/get-zen_doc/3644947/pub_5f6b3f012ac02858cefae551_5f6b5dc842c2f942be29268d/scale_1200'},
+    title : 'Егор Мамонов Павлович',
+    opis : 'Супер крутое аниме 228 1337',
+    id : '4'
+  },
+  {
+    uri : {uri : 'https://avatars.mds.yandex.net/get-zen_doc/3644947/pub_5f6b3f012ac02858cefae551_5f6b5dc842c2f942be29268d/scale_1200'},
+    title : 'Егор Мамонов Павлович',
+    opis : 'Супер крутое аниме 228 1337',
+    id : '5'
+  },
+  {
+    uri : {uri : 'https://avatars.mds.yandex.net/get-zen_doc/3644947/pub_5f6b3f012ac02858cefae551_5f6b5dc842c2f942be29268d/scale_1200'},
+    title : 'Егор Мамонов Павлович',
+    opis : 'Супер крутое аниме 228 1337',
+    id : '6'
+  },
+  {
+    uri : {uri : 'https://avatars.mds.yandex.net/get-zen_doc/3644947/pub_5f6b3f012ac02858cefae551_5f6b5dc842c2f942be29268d/scale_1200'},
+    title : 'Егор Мамонов Павлович',
+    opis : 'Супер крутое аниме 228 1337',
+    id : '7'
+  },
+  {
+    uri : {uri : 'https://avatars.mds.yandex.net/get-zen_doc/3644947/pub_5f6b3f012ac02858cefae551_5f6b5dc842c2f942be29268d/scale_1200'},
+    title : 'Егор Мамонов Павлович',
+    opis : 'Супер крутое аниме 228 1337',
+    id : '8'
+  },
+  {
+    uri : {uri : 'https://avatars.mds.yandex.net/get-zen_doc/3644947/pub_5f6b3f012ac02858cefae551_5f6b5dc842c2f942be29268d/scale_1200'},
+    title : 'Егор Мамонов Павлович',
+    opis : 'Супер крутое аниме 228 1337',
+    id : '9'
+  },
+  {
+    uri : {uri : 'https://avatars.mds.yandex.net/get-zen_doc/3644947/pub_5f6b3f012ac02858cefae551_5f6b5dc842c2f942be29268d/scale_1200'},
+    title : 'Егор Мамонов Павлович',
+    opis : 'Супер крутое аниме 228 1337',
+    id : '10'
+  },
+  {
+    uri : {uri : 'https://avatars.mds.yandex.net/get-zen_doc/3644947/pub_5f6b3f012ac02858cefae551_5f6b5dc842c2f942be29268d/scale_1200'},
+    title : 'Егор Мамонов Павлович',
+    opis : 'Супер крутое аниме 228 1337',
+    id : '11'
+  }
+
+]
 
 function api () {
   fetch("http://diwos.online/ongoing")
@@ -20,7 +97,8 @@ function api () {
             {
               uri : {uri : element.uri},
               title : element.title,
-              opis : element.opis
+              opis : element.opis,
+              id : id
             }
           )
         }
@@ -33,7 +111,7 @@ function api () {
 const t = 123;
 export default function App() {
   const AnimeBlock = ({ item }) => (
-    <Anime title={item.title} opis={item.opis} uri={item.uri}/>
+    <Anime title={item.title} opis={item.opis} uri={item.uri} id={item.id} />
   )
 
   const Home = () => (
@@ -74,6 +152,8 @@ export default function App() {
       <NativeRouter>
         <Route exact path="/" component={Home} />
         <Route path="/animeStr/:title" component={AnimeStr} />
+        <Route path="/animeSt/:title" component={AnimeStr} />
+        <Route path="/animeSt/:title" component={AnimeStr} />
       </NativeRouter>
     );
 }
@@ -93,12 +173,16 @@ const styles = StyleSheet.create({
       paddingTop : 20
   },
   panel : {
+    width : Dimensions.get('window').width,
     borderTopWidth : 1,
     borderStyle : 'solid',
     borderColor : 'black',
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding : 10,
+    position: 'absolute',
+    bottom: 0,
+    backgroundColor: '#fff'
   },
   text : {
     fontSize : 42
@@ -112,3 +196,5 @@ const styles = StyleSheet.create({
     padding: 10
   },
 });
+
+export {DATA};
